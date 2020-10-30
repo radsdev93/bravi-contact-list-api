@@ -15,7 +15,7 @@ class Countries extends ResourceController
         return $this->respond($data);
     }
 
-    public function getCountry($id = null)
+    public function get($id = null)
     {
         $model = new CountryModel();
         $data  = $model->where('country_code', $id)->first();

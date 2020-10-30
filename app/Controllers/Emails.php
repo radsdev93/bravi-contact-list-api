@@ -10,7 +10,7 @@ class Emails extends ResourceController
 
     public function index()
     {
-        $model             = new EmailModel();
+        $model          = new EmailModel();
         $data['emails'] = $model->orderBy('email_contact', 'DESC')->findAll();
         return $this->respond($data);
     }
@@ -19,7 +19,7 @@ class Emails extends ResourceController
     {
         $model = new EmailModel();
         $data  = [
-            'email_label'  => $this->request->getVar('label'),
+            'email_label'   => $this->request->getVar('label'),
             'email_address' => $this->request->getVar('address'),
             'email_contact' => $this->request->getVar('contact_id'),
         ];
@@ -34,10 +34,21 @@ class Emails extends ResourceController
         return $this->respondCreated($response);
     }
 
-    public function getEmail($id = null)
+    public function get($id = null)
     {
         $model = new EmailModel();
         $data  = $model->where('email_id', $id)->first();
+        if ($data) {
+            return $this->respond($data);
+        } else {
+            return $this->failNotFound('No email found');
+        }
+    }
+
+    public function getByContact($contact_id = null)
+    {
+        $model          = new EmailModel();
+        $data['emails'] = $model->where('contact_id', $contact_id)->findAll();
         if ($data) {
             return $this->respond($data);
         } else {
@@ -50,8 +61,8 @@ class Emails extends ResourceController
         $model = new EmailModel();
         $id    = $this->request->getVar('email_id');
         $data  = [
-            'email_label'  => $this->request->getVar('label'),
-            'email_address' => $this->request->getVar('address')
+            'email_label'   => $this->request->getVar('label'),
+            'email_address' => $this->request->getVar('address'),
         ];
         $model->update($id, $data);
         $response = [

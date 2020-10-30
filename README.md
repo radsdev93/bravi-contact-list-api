@@ -12,6 +12,8 @@ This is a RESTful API built with CodeIgniter 3 that provides a simple CRUD conta
 5. The entry points call (which will bring all data) for the models are `[base URL]/contacts`, `[base URL]/phones`, [`base URL]/countries`, `[base URL]/emails`, `[base URL]/urls`;
 6. Countries only have the `[Entry point]/get/[country phone code]` resource besides the entry point, since they are static;
 7. All other models have also the `[Entry point]/create`, `[Entry point]/get/[id]`, `[Entry point]/update/[id]` and `[Entry point]/delete/[id]` calls;
+8. Phones, emails and URLs also have the `[Entry point]/getByContact/[contact_id]` call;
+9. Phones also have the `[Entry point]/getByCountry/[country_id]` call;
 
 
 ### Model Creation Required Attributes

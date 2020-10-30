@@ -10,7 +10,7 @@ class Contacts extends ResourceController
 
     public function index()
     {
-        $model             = new ContactModel();
+        $model            = new ContactModel();
         $data['contacts'] = $model->orderBy('contact_id', 'DESC')->findAll();
         return $this->respond($data);
     }
@@ -19,9 +19,9 @@ class Contacts extends ResourceController
     {
         $model = new ContactModel();
         $data  = [
-            'contact_firstname'  => $this->request->getVar('firstname'),
-            'contact_lastname' => $this->request->getVar('lastname'),
-            'contact_birthdate' => $this->request->getVar('birthdate')
+            'contact_firstname' => $this->request->getVar('firstname'),
+            'contact_lastname'  => $this->request->getVar('lastname'),
+            'contact_birthdate' => $this->request->getVar('birthdate'),
         ];
         $model->insert($data);
         $response = [
@@ -34,7 +34,7 @@ class Contacts extends ResourceController
         return $this->respondCreated($response);
     }
 
-    public function getContact($id = null)
+    public function get($id = null)
     {
         $model = new ContactModel();
         $data  = $model->where('contact_id', $id)->first();
@@ -50,9 +50,9 @@ class Contacts extends ResourceController
         $model = new ContactModel();
         $id    = $this->request->getVar('contact_id');
         $data  = [
-            'contact_firstname'  => $this->request->getVar('firstname'),
-            'contact_lastname' => $this->request->getVar('lastname'),
-            'contact_birthdate' => $this->request->getVar('birthdate')
+            'contact_firstname' => $this->request->getVar('firstname'),
+            'contact_lastname'  => $this->request->getVar('lastname'),
+            'contact_birthdate' => $this->request->getVar('birthdate'),
         ];
         $model->update($id, $data);
         $response = [

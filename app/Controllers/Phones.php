@@ -10,7 +10,7 @@ class Phones extends ResourceController
 
     public function index()
     {
-        $model             = new PhoneModel();
+        $model          = new PhoneModel();
         $data['phones'] = $model->orderBy('phone_contact', 'DESC')->findAll();
         return $this->respond($data);
     }
@@ -19,8 +19,8 @@ class Phones extends ResourceController
     {
         $model = new PhoneModel();
         $data  = [
-            'phone_label'  => $this->request->getVar('label'),
-            'phone_number' => $this->request->getVar('number'),
+            'phone_label'   => $this->request->getVar('label'),
+            'phone_number'  => $this->request->getVar('number'),
             'phone_country' => $this->request->getVar('country_id'),
             'phone_contact' => $this->request->getVar('contact_id'),
         ];
@@ -35,10 +35,32 @@ class Phones extends ResourceController
         return $this->respondCreated($response);
     }
 
-    public function getPhone($id = null)
+    public function get($id = null)
     {
         $model = new PhoneModel();
         $data  = $model->where('phone_id', $id)->first();
+        if ($data) {
+            return $this->respond($data);
+        } else {
+            return $this->failNotFound('No phone found');
+        }
+    }
+
+    public function getByContact($contact_id = null)
+    {
+        $model          = new PhoneModel();
+        $data['phones'] = $model->where('contact_id', $contact_id)->findAll();
+        if ($data) {
+            return $this->respond($data);
+        } else {
+            return $this->failNotFound('No phone found');
+        }
+    }
+
+    public function getByCountry($country_id = null)
+    {
+        $model          = new PhoneModel();
+        $data['phones'] = $model->where('phone_country', $country_id)->findAll();
         if ($data) {
             return $this->respond($data);
         } else {
@@ -51,9 +73,9 @@ class Phones extends ResourceController
         $model = new PhoneModel();
         $id    = $this->request->getVar('phone_id');
         $data  = [
-            'phone_label'  => $this->request->getVar('label'),
-            'phone_number' => $this->request->getVar('number'),
-            'phone_country' => $this->request->getVar('country')
+            'phone_label'   => $this->request->getVar('label'),
+            'phone_number'  => $this->request->getVar('number'),
+            'phone_country' => $this->request->getVar('country'),
         ];
         $model->update($id, $data);
         $response = [
