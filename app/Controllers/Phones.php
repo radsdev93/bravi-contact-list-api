@@ -22,15 +22,16 @@ class Phones extends ResourceController
             'phone_label'   => $this->request->getVar('label'),
             'phone_number'  => $this->request->getVar('number'),
             'phone_country' => $this->request->getVar('country_id'),
-            'phone_contact' => $this->request->getVar('contact_id'),
+            'phone_contact' => $this->request->getVar('contact_id')
         ];
         $model->insert($data);
         $response = [
             'status'   => 201,
             'error'    => null,
+            'id' => $model->insertID(),
             'messages' => [
                 'success' => 'Phone created successfully',
-            ],
+            ]
         ];
         return $this->respondCreated($response);
     }
@@ -49,7 +50,7 @@ class Phones extends ResourceController
     public function getByContact($contact_id = null)
     {
         $model          = new PhoneModel();
-        $data['phones'] = $model->where('contact_id', $contact_id)->findAll();
+        $data['phones'] = $model->where('phone_contact', $contact_id)->findAll();
         if ($data) {
             return $this->respond($data);
         } else {
@@ -73,9 +74,9 @@ class Phones extends ResourceController
         $model = new PhoneModel();
         $id    = $this->request->getVar('phone_id');
         $data  = [
-            'phone_label'   => $this->request->getVar('label'),
-            'phone_number'  => $this->request->getVar('number'),
-            'phone_country' => $this->request->getVar('country'),
+            'phone_label'   => $this->request->getVar('phone_label'),
+            'phone_number'  => $this->request->getVar('phone_number'),
+            'phone_country' => $this->request->getVar('phone_country')
         ];
         $model->update($id, $data);
         $response = [
@@ -83,7 +84,7 @@ class Phones extends ResourceController
             'error'    => null,
             'messages' => [
                 'success' => 'Phone updated successfully',
-            ],
+            ]
         ];
         return $this->respond($response);
     }
@@ -99,7 +100,7 @@ class Phones extends ResourceController
                 'error'    => null,
                 'messages' => [
                     'success' => 'Phone successfully deleted',
-                ],
+                ]
             ];
             return $this->respondDeleted($response);
         } else {

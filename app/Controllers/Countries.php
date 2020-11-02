@@ -11,14 +11,14 @@ class Countries extends ResourceController
     public function index()
     {
         $model             = new CountryModel();
-        $data['countries'] = $model->orderBy('name', 'DESC')->findAll();
+        $data['countries'] = $model->orderBy('country_name', 'ASC')->findAll();
         return $this->respond($data);
     }
 
     public function get($id = null)
     {
         $model = new CountryModel();
-        $data  = $model->where('country_code', $id)->first();
+        $data  = $model->where('country_id', $id)->first();
         if ($data) {
             return $this->respond($data);
         } else {

@@ -9,23 +9,37 @@ This is a RESTful API built with CodeIgniter 3 that provides a simple CRUD conta
 2. If a contact is deleted, all of its phones, emails and URLs are deleted along with it;
 3. A phone, email or URL cannot have its contact updated - it needs to be deleted from that contact and then added to the new contact;
 4. The creation and last update time stamps are automatically added to the contacts;
-5. The entry points call (which will bring all data) for the models are `[base URL]/contacts`, `[base URL]/phones`, [`base URL]/countries`, `[base URL]/emails`, `[base URL]/urls`;
+5. The entry points call (which will bring all data) for the entities are `[base URL]/contacts`, `[base URL]/phones`, [`base URL]/countries`, `[base URL]/emails`, `[base URL]/urls`;
 6. Countries only have the `[Entry point]/get/[country phone code]` resource besides the entry point, since they are static;
-7. All other models have also the `[Entry point]/create`, `[Entry point]/get/[id]`, `[Entry point]/update/[id]` and `[Entry point]/delete/[id]` calls;
+7. All other entities also have the `[Entry point]/create`, `[Entry point]/get/[id]`, `[Entry point]/update` and `[Entry point]/delete` calls;
 8. Phones, emails and URLs also have the `[Entry point]/getByContact/[contact_id]` call;
 9. Phones also have the `[Entry point]/getByCountry/[country_id]` call;
+10. There's a simple but functional web frontend to test and interact with the API from the [`base URL]`;
 
 
-### Model Creation Required Attributes
+### Contact Creation Required Attributes
 
-In order to use the `create` call, you need to provide the following attributes for each model:
+In order to use the `create` call, you need to provide the following attributes for each entity:
 
-| Model | Attributes |
+| Entity | Attributes |
 |--|--|
 | Contact | `firstname`, `lastname` and `birthdate` |
 | Phone | `label`, `number`, `country_id` and `contact_id` |
 | Email | `label`, `address`, `contact_id` |
 | URL | `label`, `address`, `contact_id` |
+
+### Contact Update and Delete Required Attributes
+
+For the **Update** call, the entity ID must be included in the body of the call, and for the **Delete** only the entity ID by itself.
+
+### Naming Convention of Entities Attributes
+
+| Entity | Attributes |
+|--|--|
+| Contact | `contact_id` | `contact_firstname` | `contact_lastname` | `contact_birthdate` |
+| Phone | `phone_id` | `phone_label` | `phone_number` | `phone_country` | `phone_contact` |
+| Email | `email_id` | `email_label` | `email_address` | `email_contact` |
+| URL | `url_id` | `url_label` | `url_address` | `url_contact` |
 
 ## Deploy Instructions
 

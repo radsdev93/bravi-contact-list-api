@@ -21,7 +21,7 @@ class Emails extends ResourceController
         $data  = [
             'email_label'   => $this->request->getVar('label'),
             'email_address' => $this->request->getVar('address'),
-            'email_contact' => $this->request->getVar('contact_id'),
+            'email_contact' => $this->request->getVar('contact_id')
         ];
         $model->insert($data);
         $response = [
@@ -29,7 +29,7 @@ class Emails extends ResourceController
             'error'    => null,
             'messages' => [
                 'success' => 'Email created successfully',
-            ],
+            ]
         ];
         return $this->respondCreated($response);
     }
@@ -48,7 +48,7 @@ class Emails extends ResourceController
     public function getByContact($contact_id = null)
     {
         $model          = new EmailModel();
-        $data['emails'] = $model->where('contact_id', $contact_id)->findAll();
+        $data['emails'] = $model->where('email_contact', $contact_id)->findAll();
         if ($data) {
             return $this->respond($data);
         } else {
@@ -62,7 +62,7 @@ class Emails extends ResourceController
         $id    = $this->request->getVar('email_id');
         $data  = [
             'email_label'   => $this->request->getVar('label'),
-            'email_address' => $this->request->getVar('address'),
+            'email_address' => $this->request->getVar('address')
         ];
         $model->update($id, $data);
         $response = [
@@ -70,7 +70,7 @@ class Emails extends ResourceController
             'error'    => null,
             'messages' => [
                 'success' => 'Email updated successfully',
-            ],
+            ]
         ];
         return $this->respond($response);
     }
@@ -86,7 +86,7 @@ class Emails extends ResourceController
                 'error'    => null,
                 'messages' => [
                     'success' => 'Email successfully deleted',
-                ],
+                ]
             ];
             return $this->respondDeleted($response);
         } else {

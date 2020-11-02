@@ -21,15 +21,16 @@ class Urls extends ResourceController
         $data  = [
             'url_label'   => $this->request->getVar('label'),
             'url_address' => $this->request->getVar('address'),
-            'url_contact' => $this->request->getVar('contact_id'),
+            'url_contact' => $this->request->getVar('contact_id')
         ];
         $model->insert($data);
         $response = [
             'status'   => 201,
             'error'    => null,
+            'id' => $model->insertID(),
             'messages' => [
                 'success' => 'Url created successfully',
-            ],
+            ]
         ];
         return $this->respondCreated($response);
     }
@@ -48,7 +49,7 @@ class Urls extends ResourceController
     public function getByContact($contact_id = null)
     {
         $model        = new UrlModel();
-        $data['urls'] = $model->where('contact_id', $contact_id)->findAll();
+        $data['urls'] = $model->where('url_contact', $contact_id)->findAll();
         if ($data) {
             return $this->respond($data);
         } else {

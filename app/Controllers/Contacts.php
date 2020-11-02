@@ -21,15 +21,16 @@ class Contacts extends ResourceController
         $data  = [
             'contact_firstname' => $this->request->getVar('firstname'),
             'contact_lastname'  => $this->request->getVar('lastname'),
-            'contact_birthdate' => $this->request->getVar('birthdate'),
+            'contact_birthdate' => $this->request->getVar('birthdate')
         ];
         $model->insert($data);
         $response = [
             'status'   => 201,
             'error'    => null,
+            'id' => $model->insertID(),
             'messages' => [
                 'success' => 'Contact created successfully',
-            ],
+            ]
         ];
         return $this->respondCreated($response);
     }
@@ -52,7 +53,7 @@ class Contacts extends ResourceController
         $data  = [
             'contact_firstname' => $this->request->getVar('firstname'),
             'contact_lastname'  => $this->request->getVar('lastname'),
-            'contact_birthdate' => $this->request->getVar('birthdate'),
+            'contact_birthdate' => $this->request->getVar('birthdate')
         ];
         $model->update($id, $data);
         $response = [
@@ -60,7 +61,7 @@ class Contacts extends ResourceController
             'error'    => null,
             'messages' => [
                 'success' => 'Contact updated successfully',
-            ],
+            ]
         ];
         return $this->respond($response);
     }
@@ -76,7 +77,7 @@ class Contacts extends ResourceController
                 'error'    => null,
                 'messages' => [
                     'success' => 'Contact successfully deleted',
-                ],
+                ]
             ];
             return $this->respondDeleted($response);
         } else {
